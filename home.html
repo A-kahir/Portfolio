@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aymane Kahir - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: monospace;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        nav {
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 60px;
+            margin: 0 auto;
+        }
+
+        .nav-link {
+            color: #606060d9;
+            text-decoration: none;
+            transition: all 0.7s;
+            position: relative;
+            font-size: 1.2rem;
+            padding: 5px 15px;
+        }
+
+        .nav-link.active {
+            color: #ffffff;
+            animation: gameMenuBlink 4.5s infinite;
+        }
+
+        .brand {
+            color: #ffffff;
+            animation: glowingText 4.5s infinite;
+            position: absolute;
+            right: 80px;
+            font-size: 1.2rem;
+        }
+
+        .main-content {
+            display: flex;
+            padding: 50px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .text-content {
+            flex: 1;
+        }
+
+        .name {
+            font-size: 15rem;
+            font-weight: lighter;
+            line-height: 1;
+            margin-bottom: 40px;
+            animation: softGlowingText 4.5s infinite;
+        }
+
+        .greeting {
+            color: #888;
+            margin-bottom: 40px;
+            font-family: monospace;
+            font-size: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .social-link {
+            padding: 8px 25px;
+            border: 1px solid #333;
+            border-radius: 25px;
+            text-decoration: none;
+            color: #fff;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+        }
+
+        .social-link::after {
+            content: '↗';
+            font-size: 0.9rem;
+        }
+
+        .social-link.dribbble:hover {
+            background-color: #ea4c89;
+            border-color: #ea4c89;
+        }
+
+        .social-link.linkedin:hover {
+            background-color: #0077b5;
+            border-color: #0077b5;
+        }
+
+        .social-link.email:hover {
+            background-color: #ea4335;
+            border-color: #ea4335;
+        }
+
+        .profile-section {
+            position: relative;
+        }
+
+        .profile-image {
+            height: 76vh;
+            position: relative;
+        }
+
+        .profile-image img {
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        .teal-overlay {
+            position: absolute;
+            top: -110px;
+            right: 60px;
+            bottom: 0;
+            width: 200px;
+            background-color: #006d77;
+        }
+
+        .signature {
+            position: absolute;
+            bottom: 50px;
+            right: -30px;
+            color: #006d77;
+            transform: rotate(-90deg);
+            font-style: italic;
+        }
+
+        @keyframes gameMenuBlink {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes glowingText {
+            0% { text-shadow: 0 0 10px rgba(255,255,255,0.7); }
+            50% { text-shadow: 0 0 25px rgba(255,255,255,0.9); }
+            100% { text-shadow: 0 0 10px rgba(255,255,255,0.7); }
+        }
+
+        @keyframes softGlowingText {
+            0% { text-shadow: 0 0 5px rgba(255,255,255,0.3); }
+            50% { text-shadow: 0 0 15px rgba(255,255,255,0.5); }
+            100% { text-shadow: 0 0 5px rgba(255,255,255,0.3); }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 40px;
+            border: 2px solid #fff;
+            border-radius: 10px;
+        }
+
+        .scroll-indicator::before {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 50%;
+            width: 4px;
+            height: 8px;
+            background: #fff;
+            border-radius: 2px;
+            transform: translateX(-50%);
+            animation: scrollAnim 2s infinite;
+        }
+
+        @keyframes scrollAnim {
+            0% { top: 6px; opacity: 1; }
+            100% { top: 26px; opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-links">
+            <a href="#" class="nav-link active">Home</a>
+            <a href="#" class="nav-link">About Me</a>
+            <a href="#" class="nav-link">Service</a>
+            <a href="#" class="nav-link">experience</a>
+        </div>
+        <div class="brand">Akahir</div>
+    </nav>
+
+    <div class="main-content">
+        <div class="text-content">
+            <h1 class="name">Aymane<br>Kahir</h1>
+            <p class="greeting">Hello, Nice to meet you, I would like to welcome you with<br>My Personal Portfolio</p>
+            <div class="social-links">
+                <a href="#" class="social-link dribbble">Dribble</a>
+                <a href="#" class="social-link linkedin">Linkedin</a>
+                <a href="#" class="social-link email">Email</a>
+            </div>
+        </div>
+        <div class="profile-section">
+            <div class="profile-image">
+                <img src="/Picsart_25-01-05_19-09-04-883.webp" alt="Aymane Kahir">
+                <div class="teal-overlay"></div>
+            </div>
+            <div class="signature">Portfolio</div>
+        </div>
+    </div>
+
+    <div class="scroll-indicator"></div>
+
+    <script>
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                document.querySelectorAll('.nav-link').forEach(l => {
+                    l.classList.remove('active');
+                });
+                e.target.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
