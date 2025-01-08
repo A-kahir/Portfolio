@@ -15,8 +15,83 @@
         body {
             background-color: #000;
             color: #fff;
-            min-height: 100vh;
+            min-height: 300vh;
             position: relative;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 3px;
+        }
+
+        /* Space Background Container */
+        .space-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        /* Stars styles */
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Meteor styles */
+        .meteor {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            transform: rotate(45deg);
+            opacity: 0;
+        }
+
+        .meteor::before {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 1px;
+            background: linear-gradient(90deg, white, transparent);
+            transform: translateX(-100%);
+        }
+
+        @keyframes meteor {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) rotate(45deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--travel-x), var(--travel-y)) rotate(45deg);
+            }
+        }
+
+        /* Main content container */
+        .content-wrapper {
+            position: relative;
+            z-index: 2;
         }
 
         nav {
@@ -37,7 +112,6 @@
             color: #606060d9;
             text-decoration: none;
             transition: all 0.7s;
-            position: relative;
             font-size: 1.2rem;
             padding: 5px 15px;
         }
@@ -50,9 +124,9 @@
         .brand {
             color: #ffffff;
             animation: glowingText 4.5s infinite;
+            font-size: 1.2rem;
             position: absolute;
             right: 80px;
-            font-size: 1.2rem;
         }
 
         .main-content {
@@ -77,7 +151,6 @@
         .greeting {
             color: #888;
             margin-bottom: 40px;
-            font-family: monospace;
             font-size: 2rem;
         }
 
@@ -133,15 +206,6 @@
             border-radius: 10px;
         }
 
-        .teal-overlay {
-            position: absolute;
-            top: -110px;
-            right: 60px;
-            bottom: 0;
-            width: 200px;
-            background-color: #006d77;
-        }
-
         .signature {
             position: absolute;
             bottom: 50px;
@@ -151,24 +215,7 @@
             font-style: italic;
         }
 
-        @keyframes gameMenuBlink {
-            0% { opacity: 1; }
-            50% { opacity: 0.3; }
-            100% { opacity: 1; }
-        }
-
-        @keyframes glowingText {
-            0% { text-shadow: 0 0 10px rgba(255,255,255,0.7); }
-            50% { text-shadow: 0 0 25px rgba(255,255,255,0.9); }
-            100% { text-shadow: 0 0 10px rgba(255,255,255,0.7); }
-        }
-
-        @keyframes softGlowingText {
-            0% { text-shadow: 0 0 5px rgba(255,255,255,0.3); }
-            50% { text-shadow: 0 0 15px rgba(255,255,255,0.5); }
-            100% { text-shadow: 0 0 5px rgba(255,255,255,0.3); }
-        }
-
+        /* Scroll Indicator */
         .scroll-indicator {
             position: absolute;
             bottom: 30px;
@@ -178,6 +225,7 @@
             height: 40px;
             border: 2px solid #fff;
             border-radius: 10px;
+            z-index: 10;
         }
 
         .scroll-indicator::before {
@@ -197,41 +245,121 @@
             0% { top: 6px; opacity: 1; }
             100% { top: 26px; opacity: 0; }
         }
+
+        @keyframes gameMenuBlink {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes glowingText {
+            0% { text-shadow: 0 0 10px rgba(255,255,255,0.7); }
+            50% { text-shadow: 0 0 25px rgba(255,255,255,0.9); }
+            100% { text-shadow: 0 0 10px rgba(255,255,255,0.7); }
+        }
+
+        @keyframes softGlowingText {
+            0% { text-shadow: 0 0 5px rgba(255,255,255,0.3); }
+            50% { text-shadow: 0 0 15px rgba(255,255,255,0.5); }
+            100% { text-shadow: 0 0 5px rgba(255,255,255,0.3); }
+        }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="nav-links">
-            <a href="#" class="nav-link active">Home</a>
-            <a href="#" class="nav-link">About Me</a>
-            <a href="#" class="nav-link">Service</a>
-            <a href="#" class="nav-link">experience</a>
-        </div>
-        <div class="brand">Akahir</div>
-    </nav>
+    <!-- Space Background -->
+    <div class="space-background" id="spaceBackground"></div>
 
-    <div class="main-content">
-        <div class="text-content">
-            <h1 class="name">Aymane<br>Kahir</h1>
-            <p class="greeting">Hello, Nice to meet you, I would like to welcome you with<br>My Personal Portfolio</p>
-            <div class="social-links">
-                <a href="#" class="social-link dribbble">Dribble</a>
-                <a href="#" class="social-link linkedin">Linkedin</a>
-                <a href="#" class="social-link email">Email</a>
+    <!-- Main Content -->
+    <div class="content-wrapper">
+        <nav>
+            <div class="nav-links">
+                <a href="#" class="nav-link active">Home</a>
+                <a href="#" class="nav-link">About Me</a>
+                <a href="#" class="nav-link">Service</a>
+                <a href="#" class="nav-link">Experience</a>
+            </div>
+            <div class="brand">Akahir</div>
+        </nav>
+
+        <div class="main-content">
+            <div class="text-content">
+                <h1 class="name">Aymane<br>Kahir</h1>
+                <p class="greeting">Hello, Nice to meet you, I would like to welcome you with<br>My Personal Portfolio</p>
+                <div class="social-links">
+                    <a href="#" class="social-link dribbble">Dribble</a>
+                    <a href="#" class="social-link linkedin">Linkedin</a>
+                    <a href="#" class="social-link email">Email</a>
+                </div>
+            </div>
+            <div class="profile-section">
+                <div class="profile-image">
+                    <img src="Picsart_25-01-05_19-09-04-883 (1).webp" alt="Aymane Kahir">
+                </div>
+                <div class="signature">Portfolio</div>
             </div>
         </div>
-        <div class="profile-section">
-            <div class="profile-image">
-                <img src="/Picsart_25-01-05_19-09-04-883.webp" alt="Aymane Kahir">
-                <div class="teal-overlay"></div>
-            </div>
-            <div class="signature">Portfolio</div>
-        </div>
+
+        <div class="scroll-indicator"></div>
     </div>
 
-    <div class="scroll-indicator"></div>
-
     <script>
+        const spaceBackground = document.getElementById('spaceBackground');
+
+        // Create stars
+        const numberOfStars = 200;
+        for (let i = 0; i < numberOfStars; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+
+            const size = Math.random() * 2 + 1;
+            const duration = 2 + Math.random() * 3;
+
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.setProperty('--duration', `${duration}s`);
+
+            spaceBackground.appendChild(star);
+        }
+
+        // Create meteors
+        function createMeteor() {
+            const meteor = document.createElement('div');
+            meteor.className = 'meteor';
+
+            // Random starting position
+            const startX = Math.random() * 100;
+            const startY = Math.random() * 100;
+
+            // Random travel distance
+            const travelX = 150 + Math.random() * 100;
+            const travelY = 150 + Math.random() * 100;
+
+            meteor.style.left = `${startX}%`;
+            meteor.style.top = `${startY}%`;
+            meteor.style.setProperty('--travel-x', `${travelX}px`);
+            meteor.style.setProperty('--travel-y', `${travelY}px`);
+
+            const duration = 1 + Math.random() * 2;
+            meteor.style.animation = `meteor ${duration}s linear forwards`;
+
+            spaceBackground.appendChild(meteor);
+
+            setTimeout(() => {
+                meteor.remove();
+            }, duration * 1000);
+        }
+
+        // Create meteors periodically
+        setInterval(createMeteor, 2000);
+
+        // Create initial meteors
+        for (let i = 0; i < 3; i++) {
+            setTimeout(createMeteor, Math.random() * 2000);
+        }
+
+        // Navigation active state
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', (e) => {
                 document.querySelectorAll('.nav-link').forEach(l => {
